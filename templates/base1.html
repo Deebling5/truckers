@@ -1,0 +1,254 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{% block title %} {% endblock %} - Truckers Wanted</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}">
+    <!-- Google fonts - Roboto for copy, Montserrat for headings-->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,700">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Montserrat:400,700">
+    <!-- owl carousel-->
+    <link rel="stylesheet" href="{% static 'vendor/owl.carousel/assets/owl.carousel.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/owl.carousel/assets/owl.theme.default.css' %}">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="{% static 'css/style.default.css' %}" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="favicon.png">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <!-- Nucleo Icons -->
+    <link href="{% static 'assets_mod/css/nucleo-icons.css' %}" rel="stylesheet" />
+    <link href="{% static 'assets_mod/css/nucleo-svg.css' %}" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <link href="{% static 'assets_mod/css/font-awesome.css' %}" rel="stylesheet" />
+    <link href="{% static 'assets_mod/css/nucleo-svg.css' %}" rel="stylesheet" />
+    <!-- CSS Files -->
+    <link href="{% static 'assets_mod/css/argon-design-system.css' %}" rel="stylesheet" />
+    <!-- Tweaks for older IEs-->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+
+
+</head>
+
+<body class="index-page">
+    <!-- navbar-->
+    <header>
+
+
+        <nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-light position-sticky top-0 shadow py-2">
+            <div class="container">
+                <a class="navbar-brand mr-lg-5" href="/">
+                    <img src="{% static 'assets_mod/img/brand/logo-2.png' %}">
+                </a>
+
+                <div class="navbar-collapse collapse" id="navbar_global">
+
+                    <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/" role="button">Home</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" role="button">About Us</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" role="button">Contact Us</a>
+                        </li>
+                        <!--
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link" data-toggle="dropdown" href="#" role="button">
+                                <i class="ni ni-collection d-lg-none"></i>
+                                <span class="nav-link-inner--text">Examples</span>
+                            </a>
+                            <div class="dropdown-menu">
+                                <a href="./examples/landing.html" class="dropdown-item">Landing</a>
+                                <a href="./examples/profile.html" class="dropdown-item">Profile</a>
+                                <a href="./examples/login.html" class="dropdown-item">Login</a>
+                                <a href="./examples/register.html" class="dropdown-item">Register</a>
+                            </div>
+                        </li>
+                        -->
+
+                        {% if request.user.is_authenticated and request.user.role == 'employer' %}
+                        <li class="nav-item dropdown">
+                            <a id="clientZone" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle has-img mb-3 mb-lg-0 mt-3 mt-lg-0">
+                                <div class="client-menu-image">
+                                    <div class="inner">
+                                        <img src="{% static 'img/undraw_profile_pic_ic5t.svg' %}" alt="company image" class="img-fluid">
+                                    </div>
+                                </div>
+                                {% if request.user.role == 'employee' %} {{ request.user.first_name }} {{ request.user.last_name }} {% else %} {{ request.user.first_name }} {% endif %}
+                            </a>
+                            <div aria-labelledby="clientZone" class="dropdown-menu">
+                                <a href="{% url 'jobs:employer-dashboard' %}" class="dropdown-item">Dashboard</a>
+                                <a href="{% url 'jobs:employer-all-applicants' %}" class="dropdown-item">Applicants </a>
+                                <a href="{% url 'jobs:employer-jobs-create' %}" class="dropdown-item">Post a new
+                                    job </a>
+                                <a href="{% url 'accounts:logout' %}" class="dropdown-item">Logout</a>
+                            </div>
+                        </li>
+                        {% elif request.user.is_authenticated and request.user.role == 'employee' %}
+                        <li class="nav-item dropdown">
+                            <a id="clientZone" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle has-img mb-3 mb-lg-0 mt-3 mt-lg-0">
+                                <div class="client-menu-image">
+                                    <div class="inner">
+                                        <img src="{% static 'img/undraw_profile_pic_ic5t.svg' %}" alt="company image" class="img-fluid">
+                                    </div>
+                                </div>
+                                {% if request.user.role == 'employee' %} {{ request.user.first_name }} {{ request.user.last_name }} {% else %} {{ request.user.first_name }} {% endif %}
+                            </a>
+                            <div aria-labelledby="clientZone" class="dropdown-menu">
+                                <a href="{% url 'accounts:employer-profile-update' %}" class="dropdown-item">Edit Profile</a>
+                                <a href="{% url 'accounts:logout' %}" class="dropdown-item">Logout</a>
+                            </div>
+                        </li>
+                        {% else %}
+                        <li class="nav-item dropdown">
+                            <a id="pages" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa fa-signing"></i>Register
+                            </a>
+                            <div aria-labelledby="pages" class="dropdown-menu">
+                                <a href="{% url 'accounts:employee-register' %}" class="dropdown-item">Employee</a>
+                                <a href="{% url 'accounts:employer-register' %}" class="dropdown-item">Employers</a>
+                            </div>
+                        </li>
+                        <li class="nav-item" style="color: rgb(117, 155, 236)">
+                            <a href="{% url 'accounts:login' %}" class="btn navbar-btn btn-outline-light mb-5 mb-lg-0">
+                                <i class="fa fa-sign-in"></i>Login
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                    <ul class="navbar-nav align-items-lg-center ml-lg-auto">
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-icon" href="#" target="_blank" data-toggle="tooltip" title="Like us on Facebook">
+                                <i class="fa fa-facebook-square"></i>
+                                <span class="nav-link-inner--text d-lg-none">Facebook</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-icon" href="#" target="_blank" data-toggle="tooltip" title="Follow us on Instagram">
+                                <i class="fa fa-instagram"></i>
+                                <span class="nav-link-inner--text d-lg-none">Instagram</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-icon" href="#" target="_blank" data-toggle="tooltip" title="Follow us on Twitter">
+                                <i class="fa fa-twitter-square"></i>
+                                <span class="nav-link-inner--text d-lg-none">Twitter</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-icon" href="#" target="_blank" data-toggle="tooltip" title="Star us on Github">
+                                <i class="fa fa-github"></i>
+                                <span class="nav-link-inner--text d-lg-none">Github</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div>
+        {% if messages %} {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+        </div>
+        {#
+        <li{% if message.tags %} class="alert alert-{{ message.tags }}" {% endif %}>{{ message }}</li>#} {% endfor %} {% endif %} {% block content %} {% endblock %}
+    </div> -->
+
+
+    <footer class="footer has-cards">
+
+        <div class="container">
+            <div class="row row-grid align-items-center my-md">
+                <div class="col-lg-6">
+                    <h5 class="mb-0 font-weight-light">Let's get in touch on any of these platforms.</h5>
+                </div>
+                <div class="col-lg-6 text-lg-center btn-wrapper">
+                    <button target="_blank" href="https://twitter.com/creativetim" rel="nofollow" class="btn btn-icon-only btn-twitter rounded-circle" data-toggle="tooltip" data-original-title="Follow us">
+                        <span class="btn-inner--icon"><i class="fa fa-twitter"></i></span>
+                    </button>
+                    <button target="_blank" href="https://www.facebook.com/CreativeTim/" rel="nofollow" class="btn-icon-only rounded-circle btn btn-facebook" data-toggle="tooltip" data-original-title="Like us">
+                        <span class="btn-inner--icon"><i class="fab fa-facebook"></i></span>
+                    </button>
+                    <button target="_blank" href="https://dribbble.com/creativetim" rel="nofollow" class="btn btn-icon-only btn-dribbble rounded-circle" data-toggle="tooltip" data-original-title="Follow us">
+                        <span class="btn-inner--icon"><i class="fa fa-dribbble"></i></span>
+                    </button>
+                    <button target="_blank" href="https://github.com/creativetimofficial" rel="nofollow" class="btn btn-icon-only btn-github rounded-circle" data-toggle="tooltip" data-original-title="Star on Github">
+                        <span class="btn-inner--icon"><i class="fa fa-github"></i></span>
+                    </button>
+                </div>
+            </div>
+            <hr>
+            <div class="row align-items-center justify-content-md-between">
+                <div class="col-md-6">
+                    <div class="copyright">
+                        &copy; 2021 <a href="" target="_blank">Truckers Wanted</a>.
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <ul class="nav nav-footer justify-content-end">
+                        <li class="nav-item">
+                            <a href="" class="nav-link" target="_blank">Steve Nash</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link" target="_blank">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link" target="_blank">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link" target="_blank">License</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/popper.js/umd/popper.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'vendor/jquery.cookie/jquery.cookie.js' %}"></script>
+    <script src="{% static 'vendor/owl.carousel/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap-select/js/bootstrap-select.min.js' %}"></script>
+    <script src="{% static 'js/front.js' %}"></script>
+
+    <script src="{% static 'assets_mod/js/plugins/perfect-scrollbar.jquery.min.js' %}"></script>
+    <!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
+    <script src="{% static 'assets_mod/js/plugins/bootstrap-switch.js' %}"></script>
+    <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
+    <script src="{% static 'assets_mod/js/plugins/nouislider.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'assets_mod/js/plugins/moment.min.js' %}"></script>
+    <script src="{% static 'assets_mod/js/plugins/datetimepicker.js' %}" type="text/javascript"></script>
+    <script src="{% static 'assets_mod/js/plugins/bootstrap-datepicker.min.js' %}"></script>
+    <!-- Control Center for Argon UI Kit: parallax effects, scripts for the example pages etc -->
+    <!--  Google Maps Plugin    -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+    <script src="{% static 'assets_mod/js/argon-design-system.min.js'%}" type="text/javascript"></script>
+
+    {% block javascripts %}{% endblock %}
+
+</body>
+
+</html>
